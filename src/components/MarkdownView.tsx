@@ -13,11 +13,11 @@ interface Props {
 }
 
 export default function MarkdownView({ post }: Props) {
-  const { resolved } = useTheme();
+  const { resolvedBase, creative } = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const isDark = ["dark", "antigravity", "vscode", "terminal", "github-dark"].includes(resolved);
+    const isDark = resolvedBase === "dark";
     mermaid.initialize({
       startOnLoad: false,
       theme: isDark ? "dark" : "default",
@@ -36,7 +36,7 @@ export default function MarkdownView({ post }: Props) {
         }
       });
     }
-  }, [post.slug, post.content, resolved]);
+  }, [post.slug, post.content, resolvedBase, creative]);
 
   return (
     <div ref={containerRef} className="prose-md max-w-none">
