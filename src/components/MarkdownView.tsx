@@ -36,7 +36,7 @@ export default function MarkdownView({ post }: Props) {
         }
       });
     }
-  }, [post.slug, post.content, resolved]);
+  }, [post.slug, post.content, resolvedBase, creative]);
 
   return (
     <div ref={containerRef} className="prose-md max-w-none">
