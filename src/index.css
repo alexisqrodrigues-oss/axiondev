@@ -410,6 +410,77 @@
   }
 }
 
+/* ============================================
+   Smooth theme transitions
+   ============================================ */
+
+/* Fallback (Firefox & friends): tween color-ish props on common surfaces */
+body,
+header,
+footer,
+main,
+aside,
+section,
+article,
+nav,
+input,
+textarea,
+select,
+button,
+kbd,
+pre,
+code,
+.bg-background,
+.bg-card,
+.bg-popover,
+.bg-secondary,
+.bg-muted,
+.bg-primary,
+.bg-accent,
+.text-foreground,
+.text-muted-foreground,
+.text-primary,
+.border,
+.border-border,
+.border-input {
+  transition:
+    background-color 320ms ease,
+    color 320ms ease,
+    border-color 320ms ease,
+    fill 320ms ease,
+    stroke 320ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body, header, footer, main, aside, section, article, nav,
+  input, textarea, select, button, kbd, pre, code,
+  .bg-background, .bg-card, .bg-popover, .bg-secondary, .bg-muted,
+  .bg-primary, .bg-accent, .text-foreground, .text-muted-foreground,
+  .text-primary, .border, .border-border, .border-input {
+    transition: none;
+  }
+}
+
+/* Modern: View Transitions API cross-fade (Chrome/Edge/Safari) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  animation-name: theme-fade-out;
+}
+::view-transition-new(root) {
+  animation-name: theme-fade-in;
+}
+@keyframes theme-fade-out {
+  to { opacity: 0; }
+}
+@keyframes theme-fade-in {
+  from { opacity: 0; }
+}
+
 /* CRT scanlines only on dark terminal */
 .dark[data-theme="terminal"] body::before {
   content: "";

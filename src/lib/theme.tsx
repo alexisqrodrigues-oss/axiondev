@@ -49,15 +49,28 @@ function applyTheme(base: BaseMode, creative: CreativeTheme): "light" | "dark" {
   const root = document.documentElement;
   const resolved = resolveBase(base);
 
-  // base toggles .dark class
-  root.classList.toggle("dark", resolved === "dark");
+  const apply = () => {
+    root.classList.toggle("dark", resolved === "dark");
+    if (creative === "default") {
+      root.removeAttribute("data-theme");
+    } else {
+      root.setAttribute("data-theme", creative);
+    }
+  };
 
-  // creative theme as data-theme attribute
-  if (creative === "default") {
-    root.removeAttribute("data-theme");
+  // Smooth cross-fade between themes (Chrome/Edge/Safari TP)
+  const supportsViewTransition =
+    typeof document !== "undefined" &&
+    "startViewTransition" in document &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (supportsViewTransition) {
+    (document as Document & { startViewTransition: (cb: () => void) => void })
+      .startViewTransition(apply);
   } else {
-    root.setAttribute("data-theme", creative);
+    apply();
   }
+
   return resolved;
 }
 
