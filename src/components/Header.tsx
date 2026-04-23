@@ -67,8 +67,7 @@ export default function Header() {
           aria-label="axison.dev home"
         >
           <span className="text-primary">~</span>
-          <span>axison</span>
-          <span className="text-muted-foreground">.dev</span>
+          <span>axison.dev</span>
         </Link>
 
         <div className="flex-1" />
