@@ -72,7 +72,9 @@ const posts: Post[] = Object.entries(mdModules)
     const lang = (data.lang as Post["lang"]) || "all";
     const tags = Array.isArray(data.tags) ? (data.tags as string[]) : [];
     const category = data.category as string | undefined;
-    const content = parsed.content;
+    // strip a leading H1 from the body — the page header already renders the title,
+    // and we don't want it to appear twice in the rendered post.
+    const content = parsed.content.replace(/^\s*#\s+.+\n+/, "");
     const assetsBase = `/src/content/posts/${slug}/assets/`;
 
     return {
