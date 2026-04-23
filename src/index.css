@@ -4,12 +4,16 @@
 
 /* ============================================
    axison.dev design system
-   All colors HSL. All themes defined here.
+   Two independent axes:
+     - base mode  : .dark class (light | dark)
+     - creative   : [data-theme] attribute (github | codex | claude | …)
+   Combine them freely: dark + claude, light + terminal, etc.
+   All colors HSL.
    ============================================ */
 
 @layer base {
   :root {
-    /* default = light (Cloud White) */
+    /* default LIGHT (Cloud White) */
     --background: 210 33% 99%;
     --foreground: 222 47% 11%;
 
@@ -40,17 +44,14 @@
 
     --radius: 0.5rem;
 
-    /* code surfaces */
     --code-bg: 210 28% 96%;
     --code-fg: 222 47% 11%;
     --code-border: 214 25% 88%;
 
-    /* fonts */
     --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
     --font-body: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-    /* scrollbar */
     --scrollbar-thumb: 215 16% 75%;
     --scrollbar-track: 210 28% 96%;
 
@@ -64,7 +65,7 @@
     --sidebar-ring: 217 91% 60%;
   }
 
-  /* ============ DARK ============ */
+  /* default DARK (Cloud White inverted) */
   .dark {
     --background: 222 47% 6%;
     --foreground: 210 40% 96%;
@@ -115,7 +116,7 @@
     --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
-  [data-theme="github-dark"] {
+  .dark[data-theme="github"] {
     --background: 215 21% 11%;
     --foreground: 213 17% 87%;
     --card: 215 19% 14%;
@@ -136,12 +137,9 @@
     --code-bg: 215 19% 14%;
     --code-fg: 213 17% 87%;
     --code-border: 215 14% 22%;
-    --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
   /* ============ CODEX ============ */
-  /* OpenAI-inspired: minimal, neutral, soft */
   [data-theme="codex"] {
     --background: 60 9% 98%;
     --foreground: 0 0% 9%;
@@ -166,9 +164,30 @@
     --font-display: "Söhne", "Helvetica Neue", Helvetica, sans-serif;
     --font-body: "Söhne", "Helvetica Neue", Helvetica, sans-serif;
   }
+  .dark[data-theme="codex"] {
+    --background: 0 0% 9%;
+    --foreground: 60 9% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 60 9% 95%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 60 9% 95%;
+    --primary: 158 64% 50%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 60 9% 95%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 158 64% 50%;
+    --accent-foreground: 0 0% 9%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 158 64% 50%;
+    --code-bg: 0 0% 12%;
+    --code-fg: 60 9% 95%;
+    --code-border: 0 0% 18%;
+  }
 
   /* ============ CLAUDE ============ */
-  /* Anthropic-inspired: warm cream, terra accent */
   [data-theme="claude"] {
     --background: 39 30% 95%;
     --foreground: 24 18% 18%;
@@ -193,10 +212,55 @@
     --font-display: "Tiempos", "Iowan Old Style", Georgia, serif;
     --font-body: "Styrene B", -apple-system, BlinkMacSystemFont, sans-serif;
   }
+  .dark[data-theme="claude"] {
+    --background: 24 12% 10%;
+    --foreground: 36 30% 90%;
+    --card: 24 12% 13%;
+    --card-foreground: 36 30% 90%;
+    --popover: 24 12% 13%;
+    --popover-foreground: 36 30% 90%;
+    --primary: 18 70% 60%;
+    --primary-foreground: 24 12% 10%;
+    --secondary: 24 10% 17%;
+    --secondary-foreground: 36 30% 90%;
+    --muted: 24 10% 17%;
+    --muted-foreground: 36 12% 60%;
+    --accent: 18 70% 60%;
+    --accent-foreground: 24 12% 10%;
+    --border: 24 10% 20%;
+    --input: 24 10% 20%;
+    --ring: 18 70% 60%;
+    --code-bg: 24 12% 13%;
+    --code-fg: 36 30% 90%;
+    --code-border: 24 10% 20%;
+  }
 
   /* ============ ANTIGRAVITY ============ */
-  /* Futuristic dark, violet/cyan accents */
   [data-theme="antigravity"] {
+    --background: 240 30% 97%;
+    --foreground: 240 30% 12%;
+    --card: 240 25% 99%;
+    --card-foreground: 240 30% 12%;
+    --popover: 240 25% 99%;
+    --popover-foreground: 240 30% 12%;
+    --primary: 270 85% 55%;
+    --primary-foreground: 240 30% 97%;
+    --secondary: 240 20% 93%;
+    --secondary-foreground: 240 30% 12%;
+    --muted: 240 20% 93%;
+    --muted-foreground: 240 15% 40%;
+    --accent: 180 80% 35%;
+    --accent-foreground: 240 30% 97%;
+    --border: 240 20% 88%;
+    --input: 240 20% 88%;
+    --ring: 270 85% 55%;
+    --code-bg: 240 20% 95%;
+    --code-fg: 240 30% 12%;
+    --code-border: 240 20% 88%;
+    --font-display: "Space Grotesk", "Inter", sans-serif;
+    --font-body: "Inter", -apple-system, sans-serif;
+  }
+  .dark[data-theme="antigravity"] {
     --background: 240 30% 6%;
     --foreground: 240 20% 92%;
     --card: 240 28% 9%;
@@ -217,12 +281,34 @@
     --code-bg: 240 28% 9%;
     --code-fg: 180 60% 80%;
     --code-border: 240 25% 18%;
-    --font-display: "Space Grotesk", "Inter", sans-serif;
-    --font-body: "Inter", -apple-system, sans-serif;
   }
 
-  /* ============ VS CODE (Dark+) ============ */
+  /* ============ VS CODE ============ */
   [data-theme="vscode"] {
+    --background: 0 0% 98%;
+    --foreground: 220 15% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 20%;
+    --primary: 207 100% 42%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 13% 93%;
+    --secondary-foreground: 220 15% 20%;
+    --muted: 220 13% 93%;
+    --muted-foreground: 220 10% 40%;
+    --accent: 207 100% 42%;
+    --accent-foreground: 0 0% 100%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 207 100% 42%;
+    --code-bg: 220 13% 95%;
+    --code-fg: 220 15% 20%;
+    --code-border: 220 13% 88%;
+    --font-display: "Segoe UI", -apple-system, sans-serif;
+    --font-body: "Segoe UI", -apple-system, sans-serif;
+  }
+  .dark[data-theme="vscode"] {
     --background: 220 15% 13%;
     --foreground: 0 0% 83%;
     --card: 220 15% 16%;
@@ -243,13 +329,37 @@
     --code-bg: 220 15% 16%;
     --code-fg: 0 0% 83%;
     --code-border: 220 13% 22%;
-    --font-display: "Segoe UI", -apple-system, sans-serif;
-    --font-body: "Segoe UI", -apple-system, sans-serif;
   }
 
   /* ============ TERMINAL ============ */
-  /* Pure CRT vibe */
+  /* light terminal = "paper terminal": cream bg, dark green ink */
   [data-theme="terminal"] {
+    --background: 60 30% 96%;
+    --foreground: 120 60% 18%;
+    --card: 60 30% 98%;
+    --card-foreground: 120 60% 18%;
+    --popover: 60 30% 98%;
+    --popover-foreground: 120 60% 18%;
+    --primary: 120 70% 28%;
+    --primary-foreground: 60 30% 96%;
+    --secondary: 60 25% 92%;
+    --secondary-foreground: 120 60% 18%;
+    --muted: 60 25% 92%;
+    --muted-foreground: 120 25% 35%;
+    --accent: 30 80% 35%;
+    --accent-foreground: 60 30% 96%;
+    --border: 60 20% 85%;
+    --input: 60 20% 85%;
+    --ring: 120 70% 28%;
+    --code-bg: 60 25% 92%;
+    --code-fg: 120 60% 18%;
+    --code-border: 60 20% 85%;
+    --font-display: "JetBrains Mono", ui-monospace, monospace;
+    --font-body: "JetBrains Mono", ui-monospace, monospace;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  /* dark terminal = pure CRT vibe */
+  .dark[data-theme="terminal"] {
     --background: 0 0% 4%;
     --foreground: 120 100% 75%;
     --card: 0 0% 6%;
@@ -270,19 +380,12 @@
     --code-bg: 0 0% 6%;
     --code-fg: 120 100% 75%;
     --code-border: 120 30% 18%;
-    --font-display: "JetBrains Mono", ui-monospace, monospace;
-    --font-body: "JetBrains Mono", ui-monospace, monospace;
-    --font-mono: "JetBrains Mono", ui-monospace, monospace;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  html {
-    scroll-behavior: smooth;
-  }
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
@@ -294,28 +397,21 @@
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }
-  code, pre, kbd, samp {
-    font-family: var(--font-mono);
-  }
+  code, pre, kbd, samp { font-family: var(--font-mono); }
   ::selection {
     background: hsl(var(--primary) / 0.25);
     color: hsl(var(--foreground));
   }
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: hsl(var(--scrollbar-track, var(--muted)));
-  }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--scrollbar-track, var(--muted))); }
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--scrollbar-thumb, var(--muted-foreground) / 0.3));
     border-radius: 6px;
   }
 }
 
-/* terminal CRT scanlines */
-[data-theme="terminal"] body::before {
+/* CRT scanlines only on dark terminal */
+.dark[data-theme="terminal"] body::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -332,39 +428,24 @@
 }
 
 /* ============================================
-   Markdown Prose Styles
+   Markdown Prose
    ============================================ */
 .prose-md {
   @apply text-foreground;
   line-height: 1.75;
   font-size: 1.0625rem;
 }
-.prose-md > * + * {
-  margin-top: 1.25em;
-}
-.prose-md h1 {
-  @apply text-4xl md:text-5xl;
-  margin-top: 2em;
-  margin-bottom: 0.6em;
-  line-height: 1.1;
-}
+.prose-md > * + * { margin-top: 1.25em; }
+.prose-md h1 { @apply text-4xl md:text-5xl; margin-top: 2em; margin-bottom: 0.6em; line-height: 1.1; }
 .prose-md h2 {
   @apply text-3xl md:text-4xl;
-  margin-top: 1.8em;
-  margin-bottom: 0.5em;
-  line-height: 1.15;
+  margin-top: 1.8em; margin-bottom: 0.5em; line-height: 1.15;
   border-bottom: 1px solid hsl(var(--border));
   padding-bottom: 0.3em;
 }
-.prose-md h3 {
-  @apply text-2xl;
-  margin-top: 1.6em;
-  margin-bottom: 0.4em;
-}
+.prose-md h3 { @apply text-2xl; margin-top: 1.6em; margin-bottom: 0.4em; }
 .prose-md h4 { @apply text-xl; margin-top: 1.4em; }
-.prose-md p {
-  margin: 1em 0;
-}
+.prose-md p { margin: 1em 0; }
 .prose-md a {
   color: hsl(var(--primary));
   text-decoration: underline;
@@ -372,20 +453,11 @@
   text-decoration-thickness: 1px;
   transition: color 0.15s;
 }
-.prose-md a:hover {
-  text-decoration-thickness: 2px;
-}
+.prose-md a:hover { text-decoration-thickness: 2px; }
 .prose-md strong { font-weight: 600; color: hsl(var(--foreground)); }
 .prose-md em { font-style: italic; }
-.prose-md hr {
-  border: 0;
-  border-top: 1px solid hsl(var(--border));
-  margin: 3em 0;
-}
-.prose-md ul, .prose-md ol {
-  padding-left: 1.5em;
-  margin: 1em 0;
-}
+.prose-md hr { border: 0; border-top: 1px solid hsl(var(--border)); margin: 3em 0; }
+.prose-md ul, .prose-md ol { padding-left: 1.5em; margin: 1em 0; }
 .prose-md ul { list-style: disc; }
 .prose-md ol { list-style: decimal; }
 .prose-md li { margin: 0.4em 0; }
@@ -416,9 +488,7 @@
   border-radius: var(--radius);
   border: 1px solid hsl(var(--border));
 }
-.prose-md thead {
-  background: hsl(var(--muted));
-}
+.prose-md thead { background: hsl(var(--muted)); }
 .prose-md th, .prose-md td {
   padding: 0.65em 1em;
   text-align: left;
@@ -426,8 +496,6 @@
 }
 .prose-md tr:last-child td { border-bottom: 0; }
 .prose-md th { font-weight: 600; }
-
-/* inline code */
 .prose-md :not(pre) > code {
   background: hsl(var(--code-bg));
   border: 1px solid hsl(var(--code-border));
@@ -437,8 +505,6 @@
   font-size: 0.875em;
   font-weight: 500;
 }
-
-/* code blocks */
 .prose-md pre {
   background: hsl(var(--code-bg));
   border: 1px solid hsl(var(--code-border));
@@ -457,11 +523,7 @@
   border: 0;
   font-size: inherit;
 }
-
-/* code language label */
-.code-block-wrapper {
-  position: relative;
-}
+.code-block-wrapper { position: relative; }
 .code-block-lang {
   position: absolute;
   top: 0.5em;
@@ -476,8 +538,6 @@
   border-radius: 3px;
   pointer-events: none;
 }
-
-/* mermaid */
 .mermaid-block {
   display: flex;
   justify-content: center;
@@ -488,16 +548,9 @@
   margin: 1.5em 0;
   overflow-x: auto;
 }
+[data-theme="terminal"] .prose-md a { color: hsl(var(--accent)); }
+[data-theme="terminal"] .prose-md :not(pre) > code { color: hsl(var(--accent)); }
 
-/* terminal theme tweaks for prose */
-[data-theme="terminal"] .prose-md a {
-  color: hsl(var(--accent));
-}
-[data-theme="terminal"] .prose-md :not(pre) > code {
-  color: hsl(var(--accent));
-}
-
-/* anchor heading link icon */
 .heading-anchor {
   opacity: 0;
   margin-left: 0.4em;
@@ -508,11 +561,8 @@
 h1:hover .heading-anchor,
 h2:hover .heading-anchor,
 h3:hover .heading-anchor,
-h4:hover .heading-anchor {
-  opacity: 1;
-}
+h4:hover .heading-anchor { opacity: 1; }
 
-/* utility */
 .font-mono { font-family: var(--font-mono); }
 .font-display { font-family: var(--font-display); }
 .font-body { font-family: var(--font-body); }

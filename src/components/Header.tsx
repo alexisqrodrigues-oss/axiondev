@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Github, Search, Monitor, Sun, Moon, Palette, Languages } from "lucide-react";
+import { Github, Search, Monitor, Sun, Moon, Palette, Languages, Check } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useTheme, VIEW_MODES, ViewMode } from "@/lib/theme";
+import { useTheme, BASE_MODES, CREATIVE_THEMES, BaseMode, CreativeTheme } from "@/lib/theme";
 import { useI18n } from "@/lib/i18n";
 import { getAllPosts } from "@/lib/posts";
 import Fuse from "fuse.js";
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function Header() {
-  const { mode, setMode, resolved } = useTheme();
+  const { base, creative, setBase, setCreative, resolvedBase } = useTheme();
   const { lang, setLang, t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,13 +38,11 @@ export default function Header() {
     return fuse.search(q).slice(0, 6).map((r) => r.item);
   }, [q, fuse]);
 
-  // close on route change
   useEffect(() => {
     setOpen(false);
     setQ("");
   }, [location.pathname]);
 
-  // keyboard shortcut
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -58,16 +56,11 @@ export default function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const ThemeIcon =
-    resolved === "light" || resolved === "github" || resolved === "codex" || resolved === "claude"
-      ? Sun
-      : resolved === "dark" || resolved === "github-dark" || resolved === "vscode" || resolved === "antigravity"
-      ? Moon
-      : Palette;
+  const BaseIcon = base === "system" ? Monitor : resolvedBase === "dark" ? Moon : Sun;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-      <div className="container flex h-14 items-center gap-3 md:gap-5">
+      <div className="container flex h-14 items-center gap-3 md:gap-4">
         <Link
           to="/"
           className="flex items-center gap-2 font-mono text-base font-semibold tracking-tight"
@@ -160,27 +153,44 @@ export default function Header() {
           <span className={lang === "en" ? "text-foreground font-semibold" : ""}>en</span>
         </button>
 
-        {/* Theme */}
+        {/* Base mode (light/dark/system) */}
         <DropdownMenu>
           <DropdownMenuTrigger
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label={t.viewMode}
           >
-            <ThemeIcon className="h-4 w-4" />
+            <BaseIcon className="h-4 w-4" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-52">
+          <DropdownMenuContent align="end" className="w-44">
             <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
               {t.base}
             </DropdownMenuLabel>
-            {VIEW_MODES.filter((v) => v.group === "base").map((v) => (
-              <ThemeItem key={v.id} id={v.id} label={v.label} active={mode === v.id} onSelect={setMode} />
+            {BASE_MODES.map((m) => (
+              <BaseItem key={m.id} id={m.id} label={m.label} active={base === m.id} onSelect={setBase} />
             ))}
-            <DropdownMenuSeparator />
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Creative theme */}
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="creative theme"
+          >
+            <Palette className="h-4 w-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel className="text-xs uppercase tracking-wider text-muted-foreground">
               {t.creative}
             </DropdownMenuLabel>
-            {VIEW_MODES.filter((v) => v.group === "creative").map((v) => (
-              <ThemeItem key={v.id} id={v.id} label={v.label} active={mode === v.id} onSelect={setMode} />
+            {CREATIVE_THEMES.map((c) => (
+              <CreativeItem
+                key={c.id}
+                id={c.id}
+                label={c.label}
+                active={creative === c.id}
+                onSelect={setCreative}
+              />
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -189,18 +199,18 @@ export default function Header() {
   );
 }
 
-function ThemeItem({
+function BaseItem({
   id,
   label,
   active,
   onSelect,
 }: {
-  id: ViewMode;
+  id: BaseMode;
   label: string;
   active: boolean;
-  onSelect: (m: ViewMode) => void;
+  onSelect: (m: BaseMode) => void;
 }) {
-  const Icon = id === "system" ? Monitor : id === "light" ? Sun : id === "dark" ? Moon : Palette;
+  const Icon = id === "system" ? Monitor : id === "light" ? Sun : Moon;
   return (
     <DropdownMenuItem
       onSelect={() => onSelect(id)}
@@ -208,7 +218,29 @@ function ThemeItem({
     >
       <Icon className="h-3.5 w-3.5" />
       <span className="font-mono">{label}</span>
-      {active && <span className="ml-auto text-xs">●</span>}
+      {active && <Check className="ml-auto h-3 w-3" />}
+    </DropdownMenuItem>
+  );
+}
+
+function CreativeItem({
+  id,
+  label,
+  active,
+  onSelect,
+}: {
+  id: CreativeTheme;
+  label: string;
+  active: boolean;
+  onSelect: (c: CreativeTheme) => void;
+}) {
+  return (
+    <DropdownMenuItem
+      onSelect={() => onSelect(id)}
+      className={`flex items-center gap-2 text-sm cursor-pointer ${active ? "text-primary font-medium" : ""}`}
+    >
+      <span className="font-mono">{label}</span>
+      {active && <Check className="ml-auto h-3 w-3" />}
     </DropdownMenuItem>
   );
 }
