@@ -1,22 +1,22 @@
-import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useI18n } from "@/lib/i18n";
 
 const NotFound = () => {
-  const location = useLocation();
-
+  const { t } = useI18n();
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
+    document.title = "404 — axison.dev";
+  }, []);
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
-        </a>
-      </div>
+    <div className="mx-auto max-w-md text-center py-24">
+      <p className="font-mono text-xs text-muted-foreground">~/axison.dev/404/</p>
+      <h1 className="font-display text-7xl mt-4 mb-2">404</h1>
+      <p className="font-mono text-sm text-muted-foreground mb-6">
+        cat: page: No such file or directory
+      </p>
+      <Link to="/" className="text-primary hover:underline font-mono text-sm">
+        cd ~/
+      </Link>
     </div>
   );
 };
