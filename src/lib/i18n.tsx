@@ -56,7 +56,7 @@ Every post is written in plain **markdown**, no distractions. The goal: easy to 
   },
 } as const;
 
-type Dict = typeof dict.pt;
+type Dict = { [K in keyof typeof dict.pt]: string };
 
 interface I18nValue {
   lang: Lang;
